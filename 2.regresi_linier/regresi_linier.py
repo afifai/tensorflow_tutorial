@@ -43,7 +43,7 @@ for step in range(100):
 		print(step, evals)
 		train_data.append(evals)
 
-
+sess.close()
 # PROSES PLOT
 #converter = plt.colors
 cr, cg, cb = (1.0, 1.0, 0.0)
