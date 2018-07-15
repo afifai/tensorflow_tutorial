@@ -13,8 +13,8 @@ y_data = x_data * 3 + 3
 y_data = np.vectorize(lambda y: y+np.random.normal(loc=0.0, scale=0.1))(y_data)
 
 # tampilkan sampel data
-print "Contoh bentuk data:"
-print(zip(x_data, y_data)[0:5])
+print("Contoh bentuk data:")
+print(list(zip(x_data, y_data))[0:5])
 
 # PROSES REGRESI MENGGUNAKAN TENSORFLOW
 # inisialisasi variabel a dan b (weight)
@@ -31,19 +31,20 @@ optimizer = tf.train.GradientDescentOptimizer(0.5)
 train = optimizer.minimize(loss)
 
 # inisialisasi semua variabel sebelum inisialisasi session
-init = tf.global_variables_initializer()
-sess = tf.Session()
-sess.run(init)
+# init = tf.global_variables_initializer()
+# sess = tf.Session()
+# sess.run(init)
 
-# lakukan pelatihan terhadap data, dan simpan data per 5 epoch
-train_data = []
-for step in range(100):
-	evals = sess.run([train, a, b])[1:]
-	if step % 5 == 0:
-		print(step, evals)
-		train_data.append(evals)
-
-sess.close()
+with tf.Session() as sess:
+	# inisialisasi variabel
+	sess.run(tf.global_variables_initializer())
+	# lakukan pelatihan terhadap data, dan simpan data per 5 epoch
+	train_data = []
+	for step in range(100):
+		evals = sess.run([train, a, b])[1:]
+		if step % 5 == 0:
+			print(step, evals)
+			train_data.append(evals)
 # PROSES PLOT
 #converter = plt.colors
 cr, cg, cb = (1.0, 1.0, 0.0)
